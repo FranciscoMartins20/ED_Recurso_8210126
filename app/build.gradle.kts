@@ -36,7 +36,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("ed_recurso_8210126.API.Demo.Jogo")
+    mainClass.set("ed_recurso_8210126.API.Maps.RunnerMap")
 }
 
 tasks.named<Test>("test") {

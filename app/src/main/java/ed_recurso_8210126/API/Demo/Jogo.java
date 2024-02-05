@@ -14,6 +14,8 @@ public class Jogo {
 
     public Jogo() {
         this.gameMap = new GameMap();
+        this.gameMap.generateMap(10,true,1.0);
+
         // Crie instâncias de Flag e Location conforme necessário
         Flag flagJogador1 = new Flag("BandeiraJogador1");
         Location baseLocationJogador1 = new Location("BaseJogador1");
@@ -25,31 +27,12 @@ public class Jogo {
     }
 
     public void iniciarJogo() {
-        // Definir o número de bots para cada jogador
-        definirNumeroBots(jogador1, 5); // Substitua 5 pelo número desejado
-        definirNumeroBots(jogador2, 7); // Substitua 7 pelo número desejado
-
-        // Mostrar informações iniciais
         mostrarMapa();
         mostrarInfoJogadores();
 
-        // Aqui você pode adicionar mais lógica de inicialização, se necessário
-        // Por exemplo, definir a localização das bandeiras no mapa, etc.
-
-        // Iniciar o jogo (adicionar mais lógica conforme necessário)
         jogar();
     }
 
-    private void definirNumeroBots(Player jogador, int numeroBots) {
-        // Definir o número de bots para o jogador
-        jogador.setNumeroBots(numeroBots);
-
-        // Adicionar bots à lista de bots do jogador
-        for (int i = 0; i < numeroBots; i++) {
-            Bot bot = new Bot("Bot" + (i + 1), i + 1);
-            jogador.addBot(bot);
-        }
-    }
 
     private void mostrarMapa() {
         System.out.println("Mapa:");

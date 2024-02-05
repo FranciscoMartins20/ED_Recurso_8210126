@@ -66,6 +66,7 @@ public class Player {
                 ", bots=" + bots +
                 ", bandeira=" + flag +
                 ", botsList=" + botsList +
+                ", baseLocation=" + baseLocation +
                 '}';
     }
 }

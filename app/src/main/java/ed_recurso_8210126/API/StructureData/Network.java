@@ -4,7 +4,7 @@ import java.util.*;
 
 import ed_recurso_8210126.API.ADTs.NetworkADT;
 
-public class Network<T>  extends Graph<T> implements NetworkADT<T>
+public class Network<T> extends Graph<T> implements NetworkADT<T>
 {
    protected double[][] adjMatrix;    // adjacency matrix
 
