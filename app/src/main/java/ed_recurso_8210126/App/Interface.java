@@ -13,9 +13,9 @@ import java.util.Set;
 
 public class Interface<T> extends JFrame {
 
-    private WeightGraphADT<T> graph;
+    private NetworkADT<T> graph;
 
-    public Interface(WeightGraphADT<T> graph) {
+    public Interface(NetworkADT<T> graph) {
         this.graph = graph;
 
         setTitle("Graph GUI");
