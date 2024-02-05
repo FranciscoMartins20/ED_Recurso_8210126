@@ -44,6 +44,10 @@ public class ArrayOrderedList<T extends Comparable<T>> extends ArrayList<T> impl
         rear++;
     }
 
+    /******************************************************************
+     * Removes all elements from the list.
+     ******************************************************************/
+ 
     public void clear() {
         rear = 0;
     }

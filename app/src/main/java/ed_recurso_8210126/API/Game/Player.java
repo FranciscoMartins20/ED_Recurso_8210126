@@ -1,6 +1,5 @@
 package ed_recurso_8210126.API.Game;
 
-import ed_recurso_8210126.API.Maps.GameMap;
 import ed_recurso_8210126.API.StructureData.ArrayOrderedList;
 
 public class Player {
@@ -59,14 +58,6 @@ public class Player {
         botsList.add(bot);
     }
 
-    public void selecionarBots(GameMap gameMap) {
-        if (botsList.size() > 0) {
-            botsList.clear(); 
-        }
-
-
-        System.out.println("Bots selecionados para o jogador " + nome + ": " + botsList);
-    }
 
     @Override
     public String toString() {

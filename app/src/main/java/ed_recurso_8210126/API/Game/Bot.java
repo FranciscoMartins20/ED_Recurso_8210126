@@ -1,7 +1,5 @@
 package ed_recurso_8210126.API.Game;
 
-import java.util.Random;
-
 public class Bot implements Comparable<Bot> {
 
     private String nome;
@@ -11,7 +9,7 @@ public class Bot implements Comparable<Bot> {
     public Bot(String nome, int id) {
         this.nome = nome;
         this.id = id;
-        this.player = null; // O bot começa sem associação a um player
+        this.player = null; 
     }
 
     public String getNome() {
@@ -38,19 +36,6 @@ public class Bot implements Comparable<Bot> {
         this.player = player;
     }
 
-    public void mover() {
-        if (player != null) {
-            // Aqui você pode implementar o algoritmo de movimentação
-            // Exemplo simples: mover para uma posição aleatória
-            Random random = new Random();
-            int novaX = random.nextInt(100); // Substitua 100 pelo limite superior da posição X
-            int novaY = random.nextInt(100); // Substitua 100 pelo limite superior da posição Y
-
-            System.out.println("Bot " + nome + " moveu para: (" + novaX + ", " + novaY + ")");
-        } else {
-            System.out.println("Bot " + nome + " não está associado a nenhum jogador. Não pode se mover.");
-        }
-    }
 
     @Override
     public String toString() {
@@ -63,7 +48,8 @@ public class Bot implements Comparable<Bot> {
 
     @Override
     public int compareTo(Bot o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+        // Implemente a lógica de comparação adequada para os seus bots
+        // Por exemplo, compare com base no ID ou em outra propriedade relevante
+        return Integer.compare(this.id, o.id);
     }
 }

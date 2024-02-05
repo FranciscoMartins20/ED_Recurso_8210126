@@ -19,6 +19,7 @@ public class ArrayList<T> implements ListADT<T>, Iterable<T> {
     /******************************************************************
      * Creates an empty list using the default capacity.
      ******************************************************************/
+    @SuppressWarnings("unchecked")
     public ArrayList() {
         rear = 0;
         list = (T[]) (new Object[DEFAULT_CAPACITY]);
@@ -27,6 +28,7 @@ public class ArrayList<T> implements ListADT<T>, Iterable<T> {
     /******************************************************************
      * Creates an empty list using the specified capacity.
      ******************************************************************/
+    @SuppressWarnings("unchecked")
     public ArrayList(int initialCapacity) {
         rear = 0;
         list = (T[]) (new Object[initialCapacity]);
@@ -156,6 +158,7 @@ public class ArrayList<T> implements ListADT<T>, Iterable<T> {
     /******************************************************************
      * Returns an iterator for the elements currently in this list.
      ******************************************************************/
+    @SuppressWarnings("unchecked")
     public Iterator<T> iterator() {
         return new ArrayIterator<T>(list, rear);
     }
@@ -177,6 +180,7 @@ public class ArrayList<T> implements ListADT<T>, Iterable<T> {
      * twice the capacity of the old one.
      ******************************************************************/
     protected void expandCapacity() {
+        @SuppressWarnings("unchecked")
         T[] larger = (T[]) (new Object[list.length * 2]);
 
         for (int scan = 0; scan < list.length; scan++)
@@ -185,6 +189,7 @@ public class ArrayList<T> implements ListADT<T>, Iterable<T> {
         list = larger;
     }
 
+    @SuppressWarnings("hiding")
     public class ArrayIterator<T> implements Iterator {
         private int count; // the number of elements in the collection
         private int current; // the current position in the iteration
