@@ -1,5 +1,6 @@
 package ed_recurso_8210126.API.Game;
 
+import ed_recurso_8210126.API.Maps.GameMap;
 import ed_recurso_8210126.API.StructureData.ArrayOrderedList;
 
 public class Player {
@@ -15,7 +16,7 @@ public class Player {
         }
 
         this.nome = nome;
-        this.bots = bots;
+        this.bots = 0;
         this.flag = flag;
         this.botsList = new ArrayOrderedList<>();
         this.baseLocation = baseLocation;
@@ -24,7 +25,7 @@ public class Player {
     public Location getBaseLocation() {
         return baseLocation;
     }
-    
+
     public int getNumeroBots() {
         return bots;
     }
@@ -56,6 +57,15 @@ public class Player {
     // Método para adicionar um bot à lista ordenada de bots
     public void addBot(Bot bot) {
         botsList.add(bot);
+    }
+
+    public void selecionarBots(GameMap gameMap) {
+        if (botsList.size() > 0) {
+            botsList.clear(); 
+        }
+
+
+        System.out.println("Bots selecionados para o jogador " + nome + ": " + botsList);
     }
 
     @Override

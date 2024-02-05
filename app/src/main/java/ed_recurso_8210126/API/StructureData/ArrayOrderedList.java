@@ -43,4 +43,8 @@ public class ArrayOrderedList<T extends Comparable<T>> extends ArrayList<T> impl
         list[index] = element;
         rear++;
     }
+
+    public void clear() {
+        rear = 0;
+    }
 }

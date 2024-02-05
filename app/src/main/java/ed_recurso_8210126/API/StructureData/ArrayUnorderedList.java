@@ -73,4 +73,9 @@ public class ArrayUnorderedList<T> extends ArrayList<T>
       list[scan] = element;
       rear++;
    }
+
+   public void clear() {
+      rear = 0;
+   }
+ 
 }

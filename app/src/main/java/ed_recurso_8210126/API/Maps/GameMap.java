@@ -3,7 +3,6 @@ package ed_recurso_8210126.API.Maps;
 import java.util.Random;
 
 import ed_recurso_8210126.API.Game.Location;
-import ed_recurso_8210126.API.StructureData.ArrayList;
 import ed_recurso_8210126.API.StructureData.ArrayUnorderedList;
 import ed_recurso_8210126.API.StructureData.Network;
 
@@ -11,21 +10,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-
 public class GameMap extends Network<Object> {
 
     private ArrayUnorderedList<Location> locations;
+    private Location basePlayer1;
+    private Location basePlayer2;
 
-        public GameMap() {
+    public GameMap() {
         this.locations = new ArrayUnorderedList<>();
     }
 
-    
-
-
     /******************************************************************
-     Cria automaticamente o mapa de Capture the Flag.
-    ******************************************************************/
+     * Cria automaticamente o mapa de Capture the Flag.
+     ******************************************************************/
     public void createCaptureTheFlagMap(int numLocations, double edgeDensity) {
         // Verifica se os parâmetros são válidos
         if (numLocations <= 0 || edgeDensity < 0 || edgeDensity > 1) {
@@ -44,17 +41,18 @@ public class GameMap extends Network<Object> {
     }
 
     /******************************************************************
-     Gera um mapa de acordo com as características definidas no enunciado.
-    ******************************************************************/
+     * Gera um mapa de acordo com as características definidas no enunciado.
+     ******************************************************************/
     public void generateMap(int numLocations, boolean bidirectionalPaths, double edgeDensity) {
         // Verifica se os parâmetros são válidos
         if (numLocations <= 0 || edgeDensity < 0 || edgeDensity > 1) {
             System.out.println("Parâmetros inválidos para a geração do mapa.");
             return;
         }
-    
+
         // Limpa o grafo existente
         clear();
+        locations.clear();
 
         for (int i = 0; i < numLocations; i++) {
             addVertex();
@@ -62,12 +60,12 @@ public class GameMap extends Network<Object> {
             Location location = new Location("Location " + (i + 1)); // Substitua com a lógica de nomenclatura desejada
             locations.addToRear(location);
         }
-    
+
         // Adiciona vértices representando as localizações
         for (int i = 0; i < numLocations; i++) {
             addVertex();
         }
-    
+
         // Adiciona arestas com base na densidade especificada e pesos aleatórios
         Random random = new Random();
         for (int i = 0; i < numVertices; i++) {
@@ -84,9 +82,27 @@ public class GameMap extends Network<Object> {
         }
     }
 
+    public void selectFlagLocationForPlayer1(Location flagLocation) {
+        if (flagLocation != null && locations.contains(flagLocation)) {
+            basePlayer1 = flagLocation;
+            System.out.println("Bandeira do Player 1 selecionada na localização: " + flagLocation.getName());
+        } else {
+            System.out.println("Localização inválida para a bandeira do Player 1.");
+        }
+    }
+
+    public void selectFlagLocationForPlayer2(Location flagLocation) {
+        if (flagLocation != null && locations.contains(flagLocation)) {
+            basePlayer2 = flagLocation;
+            System.out.println("Bandeira do Player 2 selecionada na localização: " + flagLocation.getName());
+        } else {
+            System.out.println("Localização inválida para a bandeira do Player 2.");
+        }
+    }
+
     /******************************************************************
-     Exporta o mapa para um arquivo CSV.
-    ******************************************************************/
+     * Exporta o mapa para um arquivo CSV.
+     ******************************************************************/
     public void exportMapToCsv(String filePath) {
         try (Writer writer = new FileWriter(filePath)) {
             for (int i = 0; i < numVertices; i++) {
@@ -101,15 +117,12 @@ public class GameMap extends Network<Object> {
         }
     }
 
-    
-
     /******************************************************************
-     Limpa o grafo, removendo todos os vértices e arestas.
-    ******************************************************************/
+     * Limpa o grafo, removendo todos os vértices e arestas.
+     ******************************************************************/
     public void clear() {
         numVertices = 0;
         adjMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         vertices = new Object[DEFAULT_CAPACITY];
     }
 }
-
