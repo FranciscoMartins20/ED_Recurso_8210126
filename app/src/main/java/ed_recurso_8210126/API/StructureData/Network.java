@@ -21,71 +21,68 @@ public class Network<T>  extends Graph<T> implements NetworkADT<T>
    /******************************************************************
      Returns a string representation of the adjacency matrix. 
    ******************************************************************/
-   public String toString()
-   {
-      if (numVertices == 0)
-         return "Graph is empty";
+  public String toString() {
+    if (numVertices == 0)
+        return "Graph is empty";
 
-      String result = new String("");
+    StringBuilder result = new StringBuilder();
 
-      /** Print the adjacency Matrix */
-      result += "Adjacency Matrix\n";
-      result += "----------------\n";
-      result += "index\t";
+    /** Print the adjacency Matrix */
+    result.append("Adjacency Matrix\n");
+    result.append("----------------\n");
+    result.append("index\t");
 
-      for (int i = 0; i < numVertices; i++) 
-      {
-         result += "" + i;
-         if (i < 10)
-            result += " ";
-      }
-      result += "\n\n";
+    for (int i = 0; i < numVertices; i++) {
+        result.append(i);
+        if (i < 10)
+            result.append(" ");
+    }
+    result.append("\n\n");
 
-      for (int i = 0; i < numVertices; i++)
-      {
-         result += "" + i + "\t";
-      
-         for (int j = 0; j < numVertices; j++)
-         {
+    for (int i = 0; i < numVertices; i++) {
+        result.append(i).append("\t");
+
+        for (int j = 0; j < numVertices; j++) {
             if (adjMatrix[i][j] < Double.POSITIVE_INFINITY)
-               result += "1 ";
+                result.append("1 ");
             else
-               result += "0 ";
-         }
-         result += "\n";
-      }
+                result.append("0 ");
+        }
+        result.append("\n");
+    }
 
-      /** Print the vertex values */
-      result += "\n\nVertex Values";
-      result += "\n-------------\n";
-      result += "index\tvalue\n\n";
+    /** Print the vertex values */
+    result.append("\n\nVertex Values");
+    result.append("\n-------------\n");
+    result.append("index\tvalue\n\n");
 
-      for (int i = 0; i < numVertices; i++)
-      {
-         result += "" + i + "\t";
-         result += vertices[i].toString() + "\n";
-      }
+    for (int i = 0; i < numVertices; i++) {
+        result.append(i).append("\t");
+        if (vertices[i] != null) {
+            result.append(vertices[i].toString());
+        } else {
+            result.append("null");
+        }
+        result.append("\n");
+    }
 
-      /** Print the weights of the edges */
-      result += "\n\nWeights of Edges";
-      result += "\n----------------\n";
-      result += "index\tweight\n\n";
+    /** Print the weights of the edges */
+    result.append("\n\nWeights of Edges");
+    result.append("\n----------------\n");
+    result.append("index\tweight\n\n");
 
-      for (int i = 0; i < numVertices; i++)
-      {
-         for (int j = numVertices-1; j > i; j--)
-         {
-            if (adjMatrix[i][j] < Double.POSITIVE_INFINITY)
-            {
-               result += i + " to " + j + "\t";
-               result += adjMatrix[i][j] + "\n";
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = numVertices - 1; j > i; j--) {
+            if (adjMatrix[i][j] < Double.POSITIVE_INFINITY) {
+                result.append(i).append(" to ").append(j).append("\t");
+                result.append(adjMatrix[i][j]).append("\n");
             }
-         }
-      }
+        }
+    }
 
-      result += "\n";
-      return result;
-   }
+    result.append("\n");
+    return result.toString();
+}
 
    /******************************************************************
      Inserts an edge between two vertices of the graph.

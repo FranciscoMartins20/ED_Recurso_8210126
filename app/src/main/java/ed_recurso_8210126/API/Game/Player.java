@@ -2,14 +2,14 @@ package ed_recurso_8210126.API.Game;
 
 import ed_recurso_8210126.API.StructureData.ArrayOrderedList;
 
-
 public class Player {
     private String nome;
     private int bots;
     private Flag flag;
-    private ArrayOrderedList<Bot> botsList;  // Lista ordenada de bots
+    private ArrayOrderedList<Bot> botsList; // Lista ordenada de bots
+    private Location baseLocation;
 
-    public Player(String nome, int bots, Flag flag) {
+    public Player(String nome, int bots, Flag flag, Location baseLocation) {
         if (nome == null || nome.equals("")) {
             throw new IllegalArgumentException("Nome não pode ser vazio ou nulo!");
         }
@@ -18,8 +18,13 @@ public class Player {
         this.bots = bots;
         this.flag = flag;
         this.botsList = new ArrayOrderedList<>();
+        this.baseLocation = baseLocation;
     }
 
+    public Location getBaseLocation() {
+        return baseLocation;
+    }
+    
     public int getNumeroBots() {
         return bots;
     }
