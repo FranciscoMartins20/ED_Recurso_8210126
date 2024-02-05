@@ -1,4 +1,4 @@
-package ed_recurso_8210126.API.StructureData;
+package ed_recurso_8210126.API.ADTs;
 
 import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
 

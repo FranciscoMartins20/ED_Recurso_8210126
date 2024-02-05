@@ -3,6 +3,7 @@ package ed_recurso_8210126.API.StructureData;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
+import ed_recurso_8210126.API.ADTs.QueueADT;
 import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
 
 public class LinkedQueue<T> implements QueueADT<T>, Iterable<T> {
