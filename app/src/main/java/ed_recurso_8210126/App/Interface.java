@@ -3,6 +3,7 @@ import javax.swing.*;
 
 import ed_recurso_8210126.API.StructureData.*;
 import ed_recurso_8210126.API.ADTs.*;
+import ed_recurso_8210126.API.Maps.*;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -89,24 +90,10 @@ public class Interface<T> extends JFrame {
         }
     }
     public static void main(String[] args) {
-        WeightGraph<String> gameMap = new WeightGraph<>();
-    
-        // Adiciona locais no mapa como vértices
-        gameMap.addVertex("Base A");
-        gameMap.addVertex("Base B");
-        gameMap.addVertex("Central Area");
-        gameMap.addVertex("Obstacle Course");
-    
-        // Adiciona rotas entre os locais com pesos associados
-        gameMap.addEdge("Base A", "Central Area", 10);
-        gameMap.addEdge("Base B", "Central Area", 8);
-        gameMap.addEdge("Central Area", "Obstacle Course", 15);
-    
-        // Restante do código permanece inalterado
-        SwingUtilities.invokeLater(() -> {
-            Interface<String> graphGUI = new Interface<>(gameMap);
-            graphGUI.setVisible(true);
-        });
+        GameMap<String> gameMap = new GameMap<>();
+
+    // Restante do código permanece inalterado
+    gameMap.generateRandomMapAndDisplay(4, true, 0.5);
     }
     
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class WeightGraph<T> implements WeightGraphADT<T> {
-    private Map<T, Map<T, Integer>> adjacencyMap;
+    protected Map<T, Map<T, Integer>> adjacencyMap;
 
     public WeightGraph() {
         this.adjacencyMap = new HashMap<>();
