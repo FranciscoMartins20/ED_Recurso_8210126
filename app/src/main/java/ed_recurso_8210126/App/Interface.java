@@ -1,6 +1,9 @@
 package ed_recurso_8210126.App;
-
 import javax.swing.*;
+
+import ed_recurso_8210126.API.StructureData.*;
+import ed_recurso_8210126.API.ADTs.*;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,19 +88,25 @@ public class Interface<T> extends JFrame {
             g.drawString(String.valueOf(weight), (x1 + x2) / 2, 80); // Display edge weight
         }
     }
-
     public static void main(String[] args) {
-        WeightGraphADT<String> graph = new WeightGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addEdge("A", "B", 5);
-        graph.addEdge("B", "C", 8);
-
+        WeightGraph<String> gameMap = new WeightGraph<>();
+    
+        // Adiciona locais no mapa como vértices
+        gameMap.addVertex("Base A");
+        gameMap.addVertex("Base B");
+        gameMap.addVertex("Central Area");
+        gameMap.addVertex("Obstacle Course");
+    
+        // Adiciona rotas entre os locais com pesos associados
+        gameMap.addEdge("Base A", "Central Area", 10);
+        gameMap.addEdge("Base B", "Central Area", 8);
+        gameMap.addEdge("Central Area", "Obstacle Course", 15);
+    
+        // Restante do código permanece inalterado
         SwingUtilities.invokeLater(() -> {
-            Interface<String> graphGUI = new Interface<>(graph);
+            Interface<String> graphGUI = new Interface<>(gameMap);
             graphGUI.setVisible(true);
         });
     }
+    
 }
-

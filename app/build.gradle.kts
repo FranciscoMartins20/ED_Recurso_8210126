@@ -18,6 +18,7 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
+   
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -34,7 +35,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("ed_recurso_8210126.App")
+    mainClass.set("ed_recurso_8210126.App.Interface")
 }
 
 tasks.named<Test>("test") {

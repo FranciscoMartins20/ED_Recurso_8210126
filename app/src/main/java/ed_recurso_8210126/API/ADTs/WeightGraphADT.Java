@@ -1,4 +1,4 @@
-package ed_recurso_8210126.App;
+package ed_recurso_8210126.API.ADTs;
 
 import java.util.Map;
 import java.util.Set;

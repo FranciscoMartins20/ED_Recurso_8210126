@@ -1,8 +1,11 @@
+package ed_recurso_8210126.API.StructureData;
+import ed_recurso_8210126.API.ADTs.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class WeightGraph<T> implements WeightedGraphADT<T> {
+public class WeightGraph<T> implements WeightGraphADT<T> {
     private Map<T, Map<T, Integer>> adjacencyMap;
 
     public WeightGraph() {
