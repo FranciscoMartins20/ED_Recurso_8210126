@@ -1,44 +1,34 @@
 package ed_recurso_8210126.API.StructureData;
 
-public class BinaryTreeNode<T> {
+public class BinaryTreeNode<T>
+{
+   protected T element;
+   protected BinaryTreeNode<T> left, right;
 
-    protected T element;
-    protected BinaryTreeNode<T> left, right;
+   /*****************************************************************
+     Creates a new tree node with the specified data.
+   *****************************************************************/
+   BinaryTreeNode (T obj) 
+   {
+      element = obj;
+      left = null;
+      right = null;
+   }
 
-    /**
-     * Creates a new tree node with the specified data.
-     *
-     * @param obj the element that will become a part of the new tree node
-     */
-    public BinaryTreeNode(T obj) {
-        element = obj;
-        left = null;
-        right = null;
-    }
+   /*****************************************************************
+     Returns the number of non-null children of this node.
+     This method may be able to be written more efficiently.
+   *****************************************************************/
+   public int numChildren() 
+   {
+      int children = 0;
 
-    /**
-     * Returns the number of non-null children of this node. This method may be
-     * able to be written more efficiently.
-     *
-     * @return the integer number of non-null children of this node
-     */
-    public int numChildren() {
-        int children = 0;
-        if (left != null) {
-            children = 1 + left.numChildren();
-        }
-        if (right != null) {
-            children = children + 1 + right.numChildren();
-        }
-        return children;
-    }
+      if (left != null)
+         children = 1 + left.numChildren();
 
-    public void setLeft(BinaryTreeNode<T> left) {
-        this.left = left;
-    }
+      if (right != null)
+         children = children + 1 + right.numChildren();
 
-    public void setRight(BinaryTreeNode<T> right) {
-        this.right = right;
-    }
+      return children;
+   }
 }
-

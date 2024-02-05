@@ -1,135 +1,96 @@
 package ed_recurso_8210126.API.StructureData;
 
+import java.util.EmptyStackException;
+
+
 import ed_recurso_8210126.API.ADTs.StackADT;
-import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
 
-public class LinkedStack<T> implements StackADT<T> {
-    /**
-     * Size of the Stack
-     */
-    private int size;
+public class LinkedStack<T> implements StackADT<T>
+{
+  private int count;  // indicates the next open slot
+  private LinearNode<T> top; 
 
-    /**
-     * Especify the top of the stack
-     */
-    private LinearNode<T> top;
+  /*******************************************************************
+    Creates an empty stack.
+  *******************************************************************/
+  public LinkedStack()
+  {
+    count = 0;
+    top = null;
+  }
 
-    /**
-     * Constructor to create an empty stack.
-     */
-    public LinkedStack() {
-        this.top = null;
-        this.size = 0;
+  /*******************************************************************
+    Adds the specified element to the top of this stack.
+  *******************************************************************/
+  public void push (T element)
+  {
+    LinearNode<T> temp = new LinearNode<T> (element);
+
+    temp.setNext(top);
+    top = temp;
+    count++;
+  }
+
+  /*******************************************************************
+    Removes the element at the top of this stack and returns a
+    reference to it. Throws an EmptyStackException if the stack
+    is empty.
+  *******************************************************************/
+  public T pop() throws EmptyStackException
+  {
+    if (isEmpty())
+      throw new EmptyStackException();
+
+    T result = top.getElement();
+    top = top.getNext();
+    count--;
+ 
+    return result;
+  }
+   
+  /*******************************************************************
+    Returns a reference to the element at the top of this stack.
+    The element is not removed from the stack.  Throws an
+    EmptyStackException if the stack is empty.  
+  *******************************************************************/
+  public T peek() throws EmptyStackException
+  {
+    if (isEmpty())
+      throw new EmptyStackException(); 
+
+    return top.getElement();
+  }
+
+  /*******************************************************************
+    Returns true if this stack is empty and false otherwise. 
+  *******************************************************************/
+  public boolean isEmpty()
+  {
+    return (count == 0);
+  }
+ 
+  /*******************************************************************
+    Returns the number of elements in the stack.
+  *******************************************************************/
+  public int size()
+  {
+    return count;
+  }
+
+  /*******************************************************************
+    Returns a string representation of this stack. 
+  *******************************************************************/
+  public String toString()
+  {
+    String result = "";
+    LinearNode current = top;
+
+    while (current != null)
+    {
+      result = result + (current.getElement()).toString() + "\n";
+      current = current.getNext();
     }
 
-    /**
-     * Constructor to create a stack with a specified top and size.
-     *
-     * @param top  The top of the stack.
-     * @param size The size of the stack.
-     */
-    public LinkedStack(LinearNode<T> top, int size) {
-        this.top = top;
-        this.size = size;
-    }
-
-    /**
-     * Pushes an element onto the stack.
-     *
-     * @param element The element to push onto the stack.
-     */
-    @Override
-    public void push(T element) {
-        LinearNode<T> newNode = new LinearNode<>(element);
-        newNode.setNext(this.top);
-
-        this.top = newNode;
-
-        this.size++;
-    }
-
-    /**
-     * Removes the element at the top of this stack and
-     * returns a reference to it.
-     * Throws an EmptyCollectionException if the stack is empty.
-     * 
-     * @return T element removed from top of stack
-     * @throws EmptyCollectionException if a pop
-     *                                  is attempted on empty stack
-     */
-    @Override
-    public T pop() throws EmptyCollectionException {
-        if (isEmpty()) {
-            throw new EmptyCollectionException("The stack is empty.");
-        }
-
-        T result = this.top.getElement();
-
-        this.top = this.top.getNext();
-
-        this.size--;
-
-        return result;
-    }
-
-    /**
-     * Returns a reference to the element at the top of this stack.
-     * The element is not removed from the stack.
-     * Throws an EmptyCollectionException if the stack is empty.
-     * 
-     * @return T element on top of stack
-     * @throws EmptyCollectionException if a
-     *                                  peek is attempted on empty stack
-     */
-    @Override
-    public T peek() throws EmptyCollectionException {
-        if (isEmpty()) {
-            throw new EmptyCollectionException("The stack is empty.");
-        }
-
-        return this.top.getElement();
-    }
-
-    /**
-     * Check the emptiness of the stack
-     * 
-     * @return true if the stack is empty, false otherwise
-     */
-    @Override
-    public boolean isEmpty() {
-        return (this.top == null);
-    }
-
-    /**
-     * Returns the number of elements in the stack.
-     * 
-     * @return the number of elements in the stack
-     */
-    @Override
-    public int size() {
-        return this.size;
-    }
-
-    @Override
-    public String toString() {
-        String text = "";
-
-        for (LinearNode<T> current = this.top; current != null; current = current.getNext()) {
-            text += current.getElement() + "\n";
-        }
-
-        text += '\n';
-
-        return text;
-    }
-
-    /**
-     * Get the current size of the stack
-     * 
-     * @return size of the Stack
-     */
-    public int getSize() {
-        return size;
-    }
-
+    return result;
+  }
 }

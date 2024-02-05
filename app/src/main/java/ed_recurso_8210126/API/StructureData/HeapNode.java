@@ -1,6 +1,5 @@
 package ed_recurso_8210126.API.StructureData;
 
-
 public class HeapNode<T> extends BinaryTreeNode<T>
 {
    protected HeapNode<T> parent;

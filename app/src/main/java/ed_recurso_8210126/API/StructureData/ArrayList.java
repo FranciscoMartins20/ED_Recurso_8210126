@@ -1,166 +1,231 @@
 package ed_recurso_8210126.API.StructureData;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import ed_recurso_8210126.API.ADTs.ListADT;
 import ed_recurso_8210126.API.Exceptions.ElementNotFoundException;
 import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
 
-import java.util.ConcurrentModificationException;
 
-public class ArrayList<T> implements ListADT<T> {
 
-    protected final int DEFAULT_CAPACITY = 10;
-    protected final int EXPAND_BY = 2;
-    protected final int ELEMENT_NOT_FOUND = -1;
-
-    protected T[] items;
+@SuppressWarnings("unused")
+public class ArrayList<T> implements ListADT<T>, Iterable<T> {
+    protected final int DEFAULT_CAPACITY = 100;
+    private final int NOT_FOUND = -1;
     protected int rear;
-    protected int modCount;
+    protected T[] list;
 
-    @SuppressWarnings("unchecked")
+    /******************************************************************
+     * Creates an empty list using the default capacity.
+     ******************************************************************/
     public ArrayList() {
-        this.items = (T[]) new Object[DEFAULT_CAPACITY];
-        this.rear = 0;
-        this.modCount = 0;
+        rear = 0;
+        list = (T[]) (new Object[DEFAULT_CAPACITY]);
     }
 
-    @Override
-    public T first() {
-        if (isEmpty()) {
-            throw new EmptyCollectionException();
-        }
-        return items[0];
+    /******************************************************************
+     * Creates an empty list using the specified capacity.
+     ******************************************************************/
+    public ArrayList(int initialCapacity) {
+        rear = 0;
+        list = (T[]) (new Object[initialCapacity]);
     }
 
-    @Override
-    public T last() {
-        if (isEmpty()) {
-            throw new EmptyCollectionException();
-        }
-        return items[rear - 1];
+    /******************************************************************
+     * Removes and returns the last element in the list.
+     ******************************************************************/
+    public T removeLast() throws EmptyCollectionException {
+        T result;
+
+        if (isEmpty())
+            throw new EmptyCollectionException("list");
+
+        rear--;
+        result = list[rear];
+        list[rear] = null;
+
+        return result;
     }
 
-    @Override
+    /******************************************************************
+     * Removes and returns the first element in the list.
+     ******************************************************************/
+    public T removeFirst() throws EmptyCollectionException {
+        if (isEmpty())
+            throw new EmptyCollectionException("list");
+
+        T result = list[0];
+        rear--;
+        /** shift the elements */
+        for (int scan = 0; scan < rear; scan++)
+            list[scan] = list[scan + 1];
+
+        list[rear] = null;
+
+        return result;
+    }
+
+    /******************************************************************
+     * Removes and returns the specified element.
+     ******************************************************************/
+    public T remove(T element) {
+        T result;
+        int index = find(element);
+
+        if (index == NOT_FOUND)
+            throw new ElementNotFoundException("list");
+
+        result = list[index];
+        rear--;
+        /** shift the appropriate elements */
+        for (int scan = index; scan < rear; scan++)
+            list[scan] = list[scan + 1];
+
+        list[rear] = null;
+
+        return result;
+    }
+
+    /******************************************************************
+     * Returns a reference to the element at the front of the list.
+     * The element is not removed from the list. Throws an
+     * EmptyCollectionException if the list is empty.
+     ******************************************************************/
+    public T first() throws EmptyCollectionException {
+        if (isEmpty())
+            throw new EmptyCollectionException("list");
+
+        return list[0];
+    }
+
+    /******************************************************************
+     * Returns a reference to the element at the rear of the list.
+     * The element is not removed from the list. Throws an
+     * EmptyCollectionException if the list is empty.
+     ******************************************************************/
+    public T last() throws EmptyCollectionException {
+        if (isEmpty())
+            throw new EmptyCollectionException("list");
+
+        return list[rear - 1];
+    }
+
+    /******************************************************************
+     * Returns true if this list contains the specified element.
+     ******************************************************************/
+    public boolean contains(T target) {
+        return (find(target) != NOT_FOUND);
+    }
+
+    /******************************************************************
+     * Returns the array index of the specified element, or the
+     * constant NOT_FOUND if it is not found.
+     ******************************************************************/
+    private int find(T target) {
+        int scan = 0, result = NOT_FOUND;
+        boolean found = false;
+
+        if (!isEmpty())
+            while (!found && scan < rear)
+                if (target.equals(list[scan]))
+                    found = true;
+                else
+                    scan++;
+
+        if (found)
+            result = scan;
+
+        return result;
+    }
+
+    /******************************************************************
+     * Returns true if this list is empty and false otherwise.
+     ******************************************************************/
     public boolean isEmpty() {
         return (rear == 0);
     }
 
-    @Override
+    /******************************************************************
+     * Returns the number of elements currently in this list.
+     ******************************************************************/
     public int size() {
         return rear;
     }
 
-    protected int find(T element) {
-        for (int i = 0; i < rear; i++) {
-            if (items[i] != null && items[i].equals(element)) {
-                return i;
-            }
-        }
-        return ELEMENT_NOT_FOUND;
-    }
-
-    @Override
-    public boolean contains(T target) {
-        return (find(target) != ELEMENT_NOT_FOUND);
-    }
-
-    @Override
-    public T removeFirst() {
-        if (isEmpty()) {
-            throw new EmptyCollectionException();
-        }
-
-        T result = items[0];
-
-        for (int i = 0; i < rear - 1; i++) {
-            items[i] = items[i + 1];
-        }
-
-        items[rear - 1] = null;
-        rear--;
-        modCount++;
-
-        return result;
-    }
-
-    @Override
-    public T removeLast() {
-        if (isEmpty()) {
-            throw new EmptyCollectionException();
-        }
-
-        T result = items[rear - 1];
-        items[rear - 1] = null;
-        rear--;
-        modCount++;
-
-        return result;
-    }
-
-    @Override
-    public T remove(T element) {
-        int index = find(element);
-        if (index == ELEMENT_NOT_FOUND) {
-            throw new ElementNotFoundException();
-        }
-
-        T result = items[index];
-
-        for (int i = index; i < rear - 1; i++) {
-            items[i] = items[i + 1];
-        }
-
-        items[rear - 1] = null;
-        rear--;
-        modCount++;
-
-        return result;
-    }
-
-    @Override
+    /******************************************************************
+     * Returns an iterator for the elements currently in this list.
+     ******************************************************************/
     public Iterator<T> iterator() {
-        return new ArrayListIterator();
+        return new ArrayIterator<T>(list, rear);
     }
 
+    /******************************************************************
+     * Returns a string representation of this list.
+     ******************************************************************/
+    public String toString() {
+        String result = "";
+
+        for (int scan = 0; scan < rear; scan++)
+            result = result + list[scan].toString() + "\n";
+
+        return result;
+    }
+
+    /******************************************************************
+     * Creates a new array to store the contents of the list with
+     * twice the capacity of the old one.
+     ******************************************************************/
     protected void expandCapacity() {
-        @SuppressWarnings("unchecked")
-        T[] newItems = (T[]) new Object[items.length + EXPAND_BY];
-        System.arraycopy(items, 0, newItems, 0, rear);
-        items = newItems;
+        T[] larger = (T[]) (new Object[list.length * 2]);
+
+        for (int scan = 0; scan < list.length; scan++)
+            larger[scan] = list[scan];
+
+        list = larger;
     }
 
-    private class ArrayListIterator implements Iterator<T> {
+    public class ArrayIterator<T> implements Iterator {
+        private int count; // the number of elements in the collection
+        private int current; // the current position in the iteration
+        private T[] items;
 
-        private int current;
-        private int expectedModCount;
-
-        public ArrayListIterator() {
+        /******************************************************************
+         * Sets up this iterator using the specified items.
+         ******************************************************************/
+        public ArrayIterator(T[] collection, int size) {
+            items = collection;
+            count = size;
             current = 0;
-            expectedModCount = modCount;
         }
 
-        @Override
+        /******************************************************************
+         * Returns true if this iterator has at least one more element
+         * to deliver in the iteraion.
+         ******************************************************************/
         public boolean hasNext() {
-            return (current < rear);
+            return (current < count);
         }
 
-        @Override
+        /******************************************************************
+         * Returns the next element in the iteration. If there are no
+         * more elements in this itertion, a NoSuchElementException is
+         * thrown.
+         ******************************************************************/
         public T next() {
-            checkForConcurrentModification();
-            if (!hasNext()) {
-                throw new EmptyCollectionException();
-            }
+            if (!hasNext())
+                throw new NoSuchElementException();
 
-            T result = items[current];
             current++;
-            return result;
+
+            return items[current - 1];
         }
 
-        private void checkForConcurrentModification() {
-            if (modCount != expectedModCount) {
-                throw new ConcurrentModificationException();
-            }
+        /******************************************************************
+         * The remove operation is not supported in this collection.
+         ******************************************************************/
+        public void remove() throws UnsupportedOperationException {
+            throw new UnsupportedOperationException();
         }
     }
 }

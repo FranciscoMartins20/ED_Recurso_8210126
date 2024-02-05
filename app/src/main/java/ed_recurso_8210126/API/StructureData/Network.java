@@ -1,18 +1,12 @@
 package ed_recurso_8210126.API.StructureData;
 
-//********************************************************************
-//  Network.java       Authors: Lewis/Chase
-//
-//  Represents an adjacency matrix implementation of a network.
-//********************************************************************
-
 import java.util.*;
 
 import ed_recurso_8210126.API.ADTs.NetworkADT;
 
 public class Network<T>  extends Graph<T> implements NetworkADT<T>
 {
-   private double[][] adjMatrix;    // adjacency matrix
+   protected double[][] adjMatrix;    // adjacency matrix
 
    /******************************************************************
      Creates an empty network.
@@ -226,7 +220,7 @@ public class Network<T>  extends Graph<T> implements NetworkADT<T>
       Integer x;
       boolean found;
       LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
-      UnorderedArrayList<T> resultList = new UnorderedArrayList<T>();
+      ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
       boolean[] visited = new boolean[numVertices];
 
       if (!indexIsValid(startIndex))
@@ -280,7 +274,7 @@ public class Network<T>  extends Graph<T> implements NetworkADT<T>
    {
       Integer x;
       LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
-      UnorderedArrayList<T> resultList = new UnorderedArrayList<T>();
+      ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
 
       if (!indexIsValid(startIndex))
          return resultList.iterator();
@@ -333,8 +327,8 @@ public class Network<T>  extends Graph<T> implements NetworkADT<T>
       double weight;
       int[] predecessor = new int[numVertices];
       Heap<Double> traversalMinHeap = new Heap<Double>();
-      UnorderedArrayList<Integer> resultList = 
-                                  new UnorderedArrayList<Integer>();
+      ArrayUnorderedList<Integer> resultList = 
+                                  new ArrayUnorderedList<Integer>();
       LinkedStack<Integer> stack = new LinkedStack<Integer>();
 
       int[] pathIndex = new int[numVertices];
@@ -439,7 +433,7 @@ public class Network<T>  extends Graph<T> implements NetworkADT<T>
    ******************************************************************/
    public Iterator<T> iteratorShortestPath(int startIndex, int targetIndex)
    {
-    UnorderedArrayList templist = new UnorderedArrayList();
+      ArrayUnorderedList templist = new ArrayUnorderedList();
       if (!indexIsValid(startIndex) || !indexIsValid(targetIndex))
          return templist.iterator();
 
@@ -619,4 +613,6 @@ public class Network<T>  extends Graph<T> implements NetworkADT<T>
       vertices = largerVertices;
       adjMatrix = largerAdjMatrix;
    }
+   
+   
 }

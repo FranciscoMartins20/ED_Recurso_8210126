@@ -1,80 +1,69 @@
 package ed_recurso_8210126.API.Maps;
 
-import ed_recurso_8210126.API.StructureData.WeightGraph;
-import ed_recurso_8210126.App.Interface;
-
-import javax.swing.*;
-
 import java.util.Random;
 
-public class GameMap<T> extends WeightGraph<T> {
+import ed_recurso_8210126.API.StructureData.Network;
 
-    private final int MIN_DISTANCE = 1;
-    private final int MAX_DISTANCE = 15;
-
-    public GameMap() {
-        super();
-    }
-
-    public void generateRandomMap(int numVertices, boolean bidirectional, double density) {
-
-        if (density < 0 || density > 1) {
-            throw new IllegalArgumentException("A densidade deve estar no intervalo de 0 a 1.");
+public class GameMap extends Network<String> {
+    
+    /******************************************************************
+     Cria automaticamente o mapa de Capture the Flag.
+    ******************************************************************/
+    public void createCaptureTheFlagMap(int numLocations, double edgeDensity) {
+        // Verifica se os parâmetros são válidos
+        if (numLocations <= 0 || edgeDensity < 0 || edgeDensity > 1) {
+            System.out.println("Parâmetros inválidos para a criação do mapa.");
+            return;
         }
 
-        initializeGraph(numVertices);
-        double totalEdges = calculateTotalEdges(numVertices, bidirectional, density);
-        fillAdjacencyMatrix(numVertices, bidirectional, density, totalEdges);
+        // Gera o mapa utilizando o método da classe Network
+        generateMap(numLocations, true, edgeDensity);
+
+        // Adiciona lógica adicional específica para Capture the Flag, se necessário
+        // Por exemplo, adicionar bases, bandeiras, etc.
+        // ...
+
+        System.out.println("Mapa de Capture the Flag criado com sucesso!");
     }
 
-    private void initializeGraph(int numVertices) {
-        for (int i = 0; i < numVertices; i++) {
-            addVertex((T) Integer.valueOf(i)); // Assuming vertices are of type Integer
+    /******************************************************************
+     Gera um mapa de acordo com as características definidas no enunciado.
+    ******************************************************************/
+    public void generateMap(int numLocations, boolean bidirectionalPaths, double edgeDensity) {
+        // Verifica se os parâmetros são válidos
+        if (numLocations <= 0 || edgeDensity < 0 || edgeDensity > 1) {
+            System.out.println("Parâmetros inválidos para a geração do mapa.");
+            return;
         }
-    }
 
-    private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
-        if (bidirectional) {
-            return (numVertices * (numVertices - 1) * density) / 2.0;
-        } else {
-            return numVertices * (numVertices - 1) * density;
+        // Limpa o grafo existente
+        clear();
+
+        // Adiciona vértices representando as localizações
+        for (int i = 0; i < numLocations; i++) {
+            addVertex();
         }
-    }
 
-    private void fillAdjacencyMatrix(int numVertices, boolean bidirectional, double density, double totalEdges) {
+        // Adiciona arestas com base na densidade especificada
         Random random = new Random();
-        int generatedEdges = 0;
-    
-        while (generatedEdges < totalEdges) {
-            int i = random.nextInt(numVertices);
-            int j = random.nextInt(numVertices);
-    
-            if (i != j && !adjacencyMap.get((T) Integer.valueOf(i)).containsKey((T) Integer.valueOf(j))) {
-                int distance = random.nextInt(MAX_DISTANCE - MIN_DISTANCE + 1) + MIN_DISTANCE;
-                addEdge((T) Integer.valueOf(i), (T) Integer.valueOf(j), distance);
-    
-                if (bidirectional) {
-                    addEdge((T) Integer.valueOf(j), (T) Integer.valueOf(i), distance);
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = i + 1; j < numVertices; j++) {
+                if (random.nextDouble() < edgeDensity) {
+                    addEdge(i, j, 1);  // Peso da aresta (distância) definido como 1 para simplificar
+                    if (bidirectionalPaths) {
+                        addEdge(j, i, 1);
+                    }
                 }
-    
-                generatedEdges++;
             }
         }
     }
 
-    public void generateRandomMapAndDisplay(int numVertices, boolean bidirectional, double density) {
-        if (density < 0 || density > 1) {
-            throw new IllegalArgumentException("A densidade deve estar no intervalo de 0 a 1.");
-        }
-
-        initializeGraph(numVertices);
-        double totalEdges = calculateTotalEdges(numVertices, bidirectional, density);
-        fillAdjacencyMatrix(numVertices, bidirectional, density, totalEdges);
-
-        SwingUtilities.invokeLater(() -> {
-            Interface<T> graphGUI = new Interface<>(this);
-            graphGUI.setVisible(true);
-        });
+    /******************************************************************
+     Limpa o grafo, removendo todos os vértices e arestas.
+    ******************************************************************/
+    public void clear() {
+        numVertices = 0;
+        adjMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+        vertices = (String[])(new Object[DEFAULT_CAPACITY]);
     }
-    
 }

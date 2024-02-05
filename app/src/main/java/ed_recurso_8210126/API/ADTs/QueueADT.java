@@ -1,51 +1,23 @@
 package ed_recurso_8210126.API.ADTs;
 
-import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
+public interface QueueADT<T>
+{
+   //  Adds one element to the rear of the queue
+   public void enqueue (T element);
 
-public interface QueueADT<T> {
-    /**
-     * Adds one element to the rear of this queue.
-     * 
-     * @param element the element to be added to
-     *                the rear of this queue
-     */
-    void enqueue(T element);
+   //  Removes and returns the element at the front of the queue
+   public T dequeue();
 
-    /**
-     * Removes and returns the element at the front of
-     * this queue.
-     * 
-     * @return the element at the front of this queue
-     */
-    T dequeue() throws EmptyCollectionException;
+   //  Returns without removing the element at the front of the queue
+   public T first();
+   
+   //  Returns true if the queue contains no elements
+   public boolean isEmpty();
 
-    /**
-     * Returns without removing the element at the front of
-     * this queue.
-     * 
-     * @return the first element in this queue
-     */
-    T first();
+   //  Returns the number of elements in the queue
+   public int size();
 
-    /**
-     * Returns true if this queue contains no elements.
-     *
-     * @return true if this queue is empty
-     */
-    boolean isEmpty();
-
-    /**
-     * Returns the number of elements in this queue.
-     *
-     * @return the integer representation of the size
-     *         of this queue
-     */
-    int size();
-
-    /**
-     * Returns a string representation of this queue.
-     * 
-     * @return the string representation of this queue
-     */
-    String toString();
+   //  Returns a string representation of the queue
+   public String toString();
 }
+

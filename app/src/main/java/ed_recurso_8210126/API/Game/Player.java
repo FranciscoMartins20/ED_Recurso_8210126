@@ -1,12 +1,13 @@
 package ed_recurso_8210126.API.Game;
 
-import ed_recurso_8210126.API.StructureData.OrderedArrayList;
+import ed_recurso_8210126.API.StructureData.ArrayOrderedList;
+
 
 public class Player {
     private String nome;
     private int bots;
     private Flag flag;
-    private OrderedArrayList<Bot> botsList;  // Lista ordenada de bots
+    private ArrayOrderedList<Bot> botsList;  // Lista ordenada de bots
 
     public Player(String nome, int bots, Flag flag) {
         if (nome == null || nome.equals("")) {
@@ -16,7 +17,7 @@ public class Player {
         this.nome = nome;
         this.bots = bots;
         this.flag = flag;
-        this.botsList = new OrderedArrayList<>();
+        this.botsList = new ArrayOrderedList<>();
     }
 
     public int getNumeroBots() {
@@ -43,7 +44,7 @@ public class Player {
         this.flag = flag;
     }
 
-    public OrderedArrayList<Bot> getBotsList() {
+    public ArrayOrderedList<Bot> getBotsList() {
         return botsList;
     }
 

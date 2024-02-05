@@ -1,169 +1,102 @@
 package ed_recurso_8210126.API.StructureData;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-
 import ed_recurso_8210126.API.ADTs.QueueADT;
 import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
 
-public class LinkedQueue<T> implements QueueADT<T>, Iterable<T> {
-    private int size = 0;
-    private LinearNode<T> front, rear;
-    private int modCount;
+public class LinkedQueue<T> implements QueueADT<T>
+{
+   private int count;
+   private LinearNode<T> front, rear;
 
-    /**
-     * Adds one element to the rear of this queue.
-     * 
-     * @param element the element to be added to
-     *                the rear of this queue
-     */
-    @Override
-    public void enqueue(T element) {
-        LinearNode<T> newNode = new LinearNode<>(element);
+   //-----------------------------------------------------------------
+   //  Creates an empty queue.
+   //-----------------------------------------------------------------
+   public LinkedQueue()
+   {
+      count = 0;
+      front = rear = null;
+   }
 
-        if (isEmpty()) {
-            this.front = newNode;
-            this.rear = newNode;
-        } else {
-            this.rear.setNext(newNode);
-            this.rear = newNode;
-        }
+   //-----------------------------------------------------------------
+   //  Adds the specified element to the rear of the queue.
+   //-----------------------------------------------------------------
+   public void enqueue (T element)
+   {
+      LinearNode<T> node = new LinearNode<T>(element);
 
-        this.size++;
-        this.modCount++;
-    }
+      if (isEmpty())
+         front = node;
+      else
+         rear.setNext (node);
 
-    /**
-     * Removes and returns the element at the front of
-     * this queue.
-     * 
-     * @return the element at the front of this queue
-     */
-    @Override
-    public T dequeue() throws EmptyCollectionException {
-        if (isEmpty()) {
-            throw new EmptyCollectionException("Empty Queue");
-        }
+      rear = node;
+      count++;
+   }
 
-        T element = this.front.getElement();
+   //-----------------------------------------------------------------
+   //  Removes the element at the front of the queue and returns a
+   //  reference to it. Throws an EmptyCollectionException if the
+   //  queue is empty.
+   //-----------------------------------------------------------------
+   public T dequeue() throws EmptyCollectionException
+   {
+      if (isEmpty())
+         throw new EmptyCollectionException ("queue");
 
-        LinearNode<T> newNode = this.front.getNext();
-        this.front.setNext(null);
-        this.front = newNode;
+      T result = front.getElement();
+      front = front.getNext();
+      count--;
 
-        this.size--;
-        this.modCount++;
+      if (isEmpty())
+         rear = null;
 
-        return element;
-    }
+      return result;
+   }
+   
+   //-----------------------------------------------------------------
+   //  Returns a reference to the element at the front of the queue.
+   //  The element is not removed from the queue.  Throws an
+   //  EmptyCollectionException if the queue is empty.  
+   //-----------------------------------------------------------------
+   public T first() throws EmptyCollectionException
+   {
+      if (isEmpty())
+         throw new EmptyCollectionException ("queue"); 
 
-    /**
-     * Returns without removing the element at the front of
-     * this queue.
-     * 
-     * @return the first element in this queue
-     */
-    @Override
-    public T first() {
-        return this.front.getElement();
-    }
+      return front.getElement();
+   }
 
-    /**
-     * Returns true if this queue contains no elements.
-     *
-     * @return true if this queue is empty
-     */
-    @Override
-    public boolean isEmpty() {
-        return (front == null);
-    }
+   //-----------------------------------------------------------------
+   //  Returns true if this queue is empty and false otherwise. 
+   //-----------------------------------------------------------------
+   public boolean isEmpty()
+   {
+      return (count == 0);
+   }
+ 
+   //-----------------------------------------------------------------
+   //  Returns the number of elements currently in this queue.
+   //-----------------------------------------------------------------
+   public int size()
+   {
+      return count;
+   }
 
-    /**
-     * Returns the number of elements in this queue.
-     *
-     * @return the integer representation of the size
-     *         of this queue
-     */
-    @Override
-    public int size() {
-        return this.size;
-    }
+   //-----------------------------------------------------------------
+   //  Returns a string representation of this queue. 
+   //-----------------------------------------------------------------
+   public String toString()
+   {
+      String result = "";
+      LinearNode<T> current = front;
 
-    /**
-     * Returns a string representation of this queue.
-     * 
-     * @return the string representation of this queue
-     */
-    public String toString() {
-        String text = "";
+      while (current != null)
+      {
+         result = result + (current.getElement()).toString() + "\n";
+         current = current.getNext();
+      }
 
-        for (LinearNode<T> currentNode = front; currentNode != null; currentNode = currentNode.getNext()) {
-            text += currentNode.getElement() + "\n";
-        }
-
-        text += '\n';
-
-        return text;
-    }
-
-    /**
-     * Retorna um iterator para a fila.
-     *
-     * @return um iterator para a fila
-     */
-    @Override
-    public Iterator<T> iterator() {
-        return new LinkedQueueIterator();
-    }
-
-    /**
-     * Classe interna para o iterator da fila.
-     */
-    private class LinkedQueueIterator implements Iterator<T> {
-        private LinearNode<T> current;
-        private int expectedModCount;
-
-        /**
-         * Construtor do iterator.
-         */
-        public LinkedQueueIterator() {
-            this.current = front;
-            expectedModCount = modCount;
-        }
-
-        private void checkForConcurrentModification() {
-            if (modCount != expectedModCount) {
-                throw new ConcurrentModificationException();
-            }
-        }
-
-        /**
-         * Verifica se há um próximo elemento na fila.
-         *
-         * @return true se houver um próximo elemento, false caso contrário
-         */
-        @Override
-        public boolean hasNext() {
-            checkForConcurrentModification();
-            return (current != null);
-        }
-
-        /**
-         * Retorna o próximo elemento na fila.
-         *
-         * @return o próximo elemento na fila
-         * @throws EmptyCollectionException se a fila estiver vazia
-         */
-        @Override
-        public T next() {
-            if (!hasNext()) {
-                throw new EmptyCollectionException("No more elements in the queue");
-            }
-
-            T element = current.getElement();
-            current = current.getNext();
-            return element;
-        }
-    }
-
+      return result;
+   }
 }
+

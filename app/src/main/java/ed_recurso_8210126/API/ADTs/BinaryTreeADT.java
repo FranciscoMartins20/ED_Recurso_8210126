@@ -1,90 +1,47 @@
 package ed_recurso_8210126.API.ADTs;
 import java.util.Iterator;
 
-import ed_recurso_8210126.API.Exceptions.ElementNotFoundException;
-import ed_recurso_8210126.API.Exceptions.EmptyCollectionException;
+public interface BinaryTreeADT<T> 
+{
+   /** Removes the left subtree of the root of this binary tree. */
+   public void removeLeftSubtree();
 
-public interface BinaryTreeADT<T> {
+   /**  Removes the right subtree of the root of this binary tree. */
+   public void removeRightSubtree();
 
+   /**  Removes all elements from this binary tree. */
+   public void removeAllElements();
 
-    /**
-     * Returns a reference to the root element
-     *
-     * @return a reference to the root
-     * @throws EmptyCollectionException if tree is empty
-     */
-    public T getRoot() throws EmptyCollectionException;
+   /**  Returns true if this binary tree is empty and false otherwise. */
+   public boolean isEmpty();
 
-    /**
-     * Returns true if this binary tree is empty and false otherwise.
-     *
-     * @return true if this binary tree is empty
-     */
-    public boolean isEmpty();
+   /**  Returns the number of elements in this binary tree. */
+   public int size();
 
-    /**
-     * Returns the number of elements in this binary tree.
-     *
-     * @return the integer number of elements in this tree
-     */
-    public int size();
+   /**  Returns true if the binary tree contains an element that matches
+        the specified element and false otherwise. */
+   public boolean contains (T targetElement);
 
-    /**
-     * Returns true if the binary tree contains an element that matches the
-     * specified element and false otherwise.
-     *
-     * @param targetElement the element being sought in the tree
-     * @return true if the tree contains the target element
-     */
-    public boolean contains(T targetElement);
+   /**  Returns a reference to the specified element if it is found in 
+        this binary tree.  Throws an exception if the specified element
+        is not found.*/
+   public T find (T targetElement);
 
-    /**
-     * Returns a reference to the specified element if it is found in this
-     * binary tree. Throws an exception if the specified element is not found.
-     *
-     * @param targetElement the element being sought in the tree
-     * @return a reference to the specified element
-     * @throws ElementNotFoundException if targetElement doesn't exist
-     */
-    public T find(T targetElement) throws ElementNotFoundException;
+   /**  Returns the string representation of the binary tree. */
+   public String toString();
 
-    /**
-     * Returns the string representation of the binary tree.
-     *
-     * @return a string representation of the binary tree
-     */
-    public String toString();
+   /**  Performs an inorder traversal on this binary tree by calling an 
+        overloaded, recursive inorder method that starts with the root. */
+   public Iterator<T> iteratorInOrder();
 
-    /**
-     * Performs an inorder traversal on this binary tree by calling an
-     * overloaded, recursive inorder method that starts with the root.
-     *
-     * @return an iterator over the elements of this binary tree
-     */
-    public Iterator<T> iteratorInOrder();
+   /**  Performs a preorder traversal on this binary tree by calling an 
+        overloaded, recursive preorder method that starts with the root. */
+   public Iterator<T> iteratorPreOrder();
 
-    /**
-     * Performs a preorder traversal on this binary tree by calling an
-     * overloaded, recursive preorder method that starts with the root.
-     *
-     * @return an iterator over the elements of this binary tree
-     */
-    public Iterator<T> iteratorPreOrder();
+   /**  Performs a postorder traversal on this binary tree by calling an 
+        overloaded, recursive postorder method that starts with the root. */
+   public Iterator<T> iteratorPostOrder();
 
-    /**
-     * Performs a postorder traversal on this binary tree by calling an
-     * overloaded, recursive postorder method that starts with the root.
-     *
-     * @return an iterator over the elements of this binary tree
-     */
-    public Iterator<T> iteratorPostOrder();
-
-    /**
-     * Performs a levelorder traversal on the binary tree, using a queue.
-     *
-     * @return an iterator over the elements of this binary tree
-     */
-    public Iterator<T> iteratorLevelOrder();
-    
+   /**  Performs a levelorder traversal on the binary tree, using a queue. */
+   public Iterator<T> iteratorLevelOrder();
 }
-
