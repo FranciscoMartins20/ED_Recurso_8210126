@@ -6,7 +6,7 @@ public class Player {
     private String nome;
     private int bots;
     private Flag flag;
-    private ArrayOrderedList<Bot> botsList; // Lista ordenada de bots
+    private ArrayOrderedList<Bot> botsList;
     private Location baseLocation;
 
     public Player(String nome, int bots, Flag flag, Location baseLocation) {
@@ -15,7 +15,7 @@ public class Player {
         }
 
         this.nome = nome;
-        this.bots = 0;
+        this.bots = bots;
         this.flag = flag;
         this.botsList = new ArrayOrderedList<>();
         this.baseLocation = baseLocation;
@@ -53,7 +53,6 @@ public class Player {
         return botsList;
     }
 
-    // Método para adicionar um bot à lista ordenada de bots
     public void addBot(Bot bot) {
         botsList.add(bot);
     }

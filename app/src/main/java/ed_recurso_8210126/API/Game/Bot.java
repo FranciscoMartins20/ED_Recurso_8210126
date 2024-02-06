@@ -1,15 +1,19 @@
 package ed_recurso_8210126.API.Game;
 
+import ed_recurso_8210126.API.Algorithms.*;
+
 public class Bot implements Comparable<Bot> {
 
     private String nome;
     private int id;
     private Player player;
+    private MovementAlgorithm movementAlgorithm;
 
-    public Bot(String nome, int id) {
+    public Bot(String nome, int id, MovementAlgorithm movementAlgorithm) {
         this.nome = nome;
         this.id = id;
         this.player = null; 
+        this.movementAlgorithm = movementAlgorithm;
     }
 
     public String getNome() {
@@ -36,6 +40,13 @@ public class Bot implements Comparable<Bot> {
         this.player = player;
     }
 
+    public MovementAlgorithm getMovementAlgorithm() {
+        return movementAlgorithm;
+    }
+
+    public void setMovementAlgorithm(MovementAlgorithm movementAlgorithm) {
+        this.movementAlgorithm = movementAlgorithm;
+    }
 
     @Override
     public String toString() {
@@ -43,6 +54,7 @@ public class Bot implements Comparable<Bot> {
                 "nome='" + nome + '\'' +
                 ", id=" + id +
                 ", player=" + (player != null ? player.getNome() : "Nenhum") +
+                ", movementAlgorithm=" + movementAlgorithm.getClass().getSimpleName() +
                 '}';
     }
 

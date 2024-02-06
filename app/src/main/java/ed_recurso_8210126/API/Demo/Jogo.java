@@ -3,8 +3,8 @@ package ed_recurso_8210126.API.Demo;
 import ed_recurso_8210126.API.Game.Flag;
 import ed_recurso_8210126.API.Game.Location;
 import ed_recurso_8210126.API.Game.Player;
-import ed_recurso_8210126.API.Game.Bot;
 import ed_recurso_8210126.API.Maps.GameMap;
+
 
 public class Jogo {
 
@@ -19,24 +19,30 @@ public class Jogo {
         // Crie instâncias de Flag e Location conforme necessário
         Flag flagJogador1 = new Flag("BandeiraJogador1");
         Location baseLocationJogador1 = new Location("BaseJogador1");
-        this.jogador1 = new Player("Jogador1", 0, flagJogador1, baseLocationJogador1);
+        this.jogador1 = new Player("Jogador1", 10, flagJogador1, baseLocationJogador1);
 
         Flag flagJogador2 = new Flag("BandeiraJogador2");
         Location baseLocationJogador2 = new Location("BaseJogador2");
-        this.jogador2 = new Player("Jogador2", 0, flagJogador2, baseLocationJogador2);
+        this.jogador2 = new Player("Jogador2", 5, flagJogador2, baseLocationJogador2);
     }
 
     public void iniciarJogo() {
         mostrarMapa();
         mostrarInfoJogadores();
+     
 
         jogar();
     }
 
+   
+    
+
+    
+
 
     private void mostrarMapa() {
         System.out.println("Mapa:");
-        gameMap.exportMapToCsv("mapa.csv"); // Exporta o mapa para um arquivo CSV (altere conforme necessário)
+        gameMap.exportMapToCsv("mapa.csv");
     }
 
     private void mostrarInfoJogadores() {
